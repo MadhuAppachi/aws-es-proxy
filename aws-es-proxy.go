@@ -321,6 +321,21 @@ func (p *proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// Read the response body
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Convert to string
+	bodyString := string(bodyBytes)
+
+	// Replace "OpenSearch" with "Elasticsearch"
+	modifiedBodyString := strings.Replace(bodyString, `"The OpenSearch Project: https://opensearch.org/"`, `"name":"You Know, for Search"`, -1)
+
+	// Convert back to bytes and write back to the response body
+	resp.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(modifiedBodyString)))
+
 	defer resp.Body.Close()
 
 	// Write back headers to requesting client
