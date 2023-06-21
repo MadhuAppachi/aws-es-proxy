@@ -331,7 +331,7 @@ func (p *proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	bodyString := string(bodyBytes)
 
 	// Replace "OpenSearch" with "Elasticsearch"
-	modifiedBodyString := strings.Replace(bodyString, `"The OpenSearch Project: https://opensearch.org/"`, `"name":"You Know, for Search"`, -1)
+	modifiedBodyString := strings.Replace(bodyString, `"The OpenSearch Project: https://opensearch.org/"`, `"You Know, for Search"`, -1)
 
 	// Convert back to bytes and write back to the response body
 	resp.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(modifiedBodyString)))
